@@ -9,6 +9,21 @@ This is a React Native project created for Assignment 1 UI Screen implementation
 ---
 ![Demo](./assets/t1.gif)
 
+
+## Assignment 1 – UI Screen
+
+This project includes:
+
+Home || Detail || ViewAll Screen UI
+
+Home Filter || Add Favourit 
+
+Styled Components || Responsive Layout || Navigation Setup || Clean UI Design
+
+## Tech Stack
+
+React Native || TypeScript|| React Navigation ||Functional Components || React Hooks
+
 ## 🚀 Getting Started
 
 Follow the steps below to run the project.
@@ -84,33 +99,7 @@ This is one way to run your app — you can also build it directly from Android 
 ![Demo](./assets/t1.gif)
 
 
-## Assignment 1 – UI Screen
 
-This project includes:
-
-Home, Detail, ViewAll Screen UI
-
-Home Filter, Add Favourit 
-
-Styled Components
-
-Responsive Layout
-
-Navigation Setup
-
-Clean UI Design
-
-## Tech Stack
-
-React Native
-
-TypeScript
-
-React Navigation
-
-Functional Components
-
-React Hooks
 
 ## 
 
