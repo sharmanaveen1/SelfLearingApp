@@ -86,8 +86,8 @@ This is one way to run your app — you can also build it directly from Android 
 
 ## Assignment 1 Refrance VIDEO/GIF
 
-https://github.com/sharmanaveen1/SelfLearingApp/tree/Task_Week1/assets/t1.gif
 
+![Demo](https://github.com/sharmanaveen1/SelfLearingApp/tree/Task_Week1/assets/t1.gif)
 
 
 ## Assignment 1 – UI Screen
