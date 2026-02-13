@@ -1,12 +1,13 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-![Demo](./assets/t1.gif)
+
 
 # 📱 React Native Assignment Project
 
 This is a React Native project created for Assignment 1 UI Screen implementation.
 
 ---
+![Demo](./assets/t1.gif)
 
 ## 🚀 Getting Started
 
@@ -28,13 +29,6 @@ Run:
 ```bash
 npm install
 
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
 # Using npm
 npm start
 
@@ -43,8 +37,6 @@ yarn start
 ```
 
 ## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
 
 ### Android
 
@@ -89,7 +81,7 @@ This is one way to run your app — you can also build it directly from Android 
 ## Assignment 1 Refrance VIDEO/GIF
 
 
-![Demo](https://github.com/sharmanaveen1/SelfLearingApp/tree/Task_Week1/assets/t1.gif)
+![Demo](./assets/t1.gif)
 
 
 ## Assignment 1 – UI Screen
