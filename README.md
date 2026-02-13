@@ -84,12 +84,19 @@ If everything is set up correctly, you should see your new app running in the An
 
 This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
-## Step 3: Modify your app
+## Assignment 1 Refrance VIDEO/GIF
+
+https://github.com/sharmanaveen1/SelfLearingApp/tree/Task_Week1/assets/t1.gif
+
+
+
 ## Assignment 1 – UI Screen
 
 This project includes:
 
-Home Screen UI
+Home, Detail, ViewAll Screen UI
+
+Home Filter, Add Favourit 
 
 Styled Components
 
@@ -98,4 +105,18 @@ Responsive Layout
 Navigation Setup
 
 Clean UI Design
+
+## Tech Stack
+
+React Native
+
+TypeScript
+
+React Navigation
+
+Functional Components
+
+React Hooks
+
+## 
 
