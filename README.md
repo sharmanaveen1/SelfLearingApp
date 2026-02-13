@@ -1,5 +1,7 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+![Demo](./assets/t1.gif)
+
 # 📱 React Native Assignment Project
 
 This is a React Native project created for Assignment 1 UI Screen implementation.
