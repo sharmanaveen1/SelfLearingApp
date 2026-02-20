@@ -1,13 +1,31 @@
 // types/place.ts
 export interface Place {
-  id: string;
+   article_id: string;
+  link: string;
   title: string;
-  location: string;
-  rating: number;
-  image: { uri: string };
-  category: string;
-  price: number;
-  duration: string;
-  temperature: string;
   description: string;
+  content: string;
+  keywords: string[];
+  creator: string[];
+  language: string;
+  country: string[];
+  category: string[];
+  datatype: string;
+  pubDate: string;
+  pubDateTZ: string;
+  fetched_at: string;
+  image_url: string | null;
+  video_url: string | null;
+  source_id: string;
+  source_name: string;
+  source_priority: number;
+  source_url: string;
+  source_icon: string;
+  sentiment: string;
+  sentiment_stats: string;
+  ai_tag: string;
+  ai_region: string;
+  ai_org: string;
+  ai_summary: string;
+  duplicate: boolean;
 }

@@ -4,17 +4,21 @@
  *
  * @format
  */
-import { SafeAreaView } from "react-native-safe-area-context";
-import { createStaticNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './src/login/LoginScreen';
 import HomeScreen from './src/home/HomeScreen';
 import TravelDetailsScreen from './src/detail/TravelDetailsScreen';
 import ExampleScreen from './src/ExampleScreen';
-import { StatusBar } from "react-native";
-import ViewAllScreen from "./src/home/ViewAllScreen";
-import { Place } from "./src/home/place";
-
+import { StatusBar } from 'react-native';
+import ViewAllScreen from './src/home/ViewAllScreen';
+import { Place } from './src/home/place';
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import ProfileScreen from './src/profile/ProfileScreen';
+import home from './src/home/home';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -22,44 +26,72 @@ export type RootStackParamList = {
   ViewAll: { places: Place[] };
 };
 
+const tabScreenOptions = ({ route }: any) => ({
+  headerShown: false,
+  tabBarIcon: ({ focused, color, size }: any) => {
+    let iconName: string;
 
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Home: {
-      screen: HomeScreen,
-      options: {title: 'Welcome',headerShown: false},
-    },
-    Details: {
-      screen: TravelDetailsScreen,
-       options: {headerShown: false}
-    },
-      Example: {
-      screen: ExampleScreen,
-    },
-      LoginScreen: {
-      screen: LoginScreen,
-    },
-    ViewAll: {
-      screen: ViewAllScreen,
-      options: { headerShown: false },
-    },
-    
+    switch (route.name) {
+      case 'Home':
+        iconName = focused ? 'home' : 'home-outline';
+        break;
+      case 'Profile':
+        iconName = focused ? 'person' : 'person-outline';
+        break;
+      case 'Favourite':
+        iconName = focused ? 'heart' : 'heart-outline';
+        break;
+      default:
+        iconName = 'ellipse';
+    }
+
+    return <Ionicons name={iconName} size={size} color={color} />;
+  },
+
+  tabBarActiveTintColor: '#0D47A1',
+  tabBarInactiveTintColor: 'gray',
+
+  tabBarStyle: {
+    height: 60,
+    paddingBottom: 5,
   },
 });
 
-const Stack = createStaticNavigation(RootStack);
+const Stack = createNativeStackNavigator();
+
+const Tab = createBottomTabNavigator();
+
+function MainTabs() {
+  return (
+    <Tab.Navigator screenOptions={tabScreenOptions}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Favourite" component={LoginScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}
+
+function RootStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainTabs" component={MainTabs} />
+      <Stack.Screen name="Details" component={TravelDetailsScreen} />
+      <Stack.Screen name="Example" component={ExampleScreen} />
+      <Stack.Screen name="ViewAll" component={ViewAllScreen} />
+    </Stack.Navigator>
+  );
+}
 
 const App = () => {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0D47A1" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#0D47A1' }}>
       <StatusBar barStyle="light-content" />
-      <Stack />
+      <NavigationContainer>
+        <RootStack />
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
-
-
-
 
 export default App;

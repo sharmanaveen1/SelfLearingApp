@@ -1,11 +1,9 @@
 // data/places.ts
 
-import { Place } from "./place";
 
 
-export const categories: string[] = ["Most Viewed", "Nearby", "Latest"];
 
-export const places: Place[] = [
+/* export const places: Place[] = [
   {
     id: "1",
     title: "Mount Fuji",
@@ -82,5 +80,5 @@ export const places: Place[] = [
     description:
       "The Grand Canyon is a massive geological wonder carved by the Colorado River over millions of years.",
   },
-];
+]; */
 
