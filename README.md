@@ -6,11 +6,9 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 This is a React Native project created for Assignment 1 UI Screen implementation.
 
----
-![Demo](./assets/t1.gif)
 
 
-## Assignment 1 – UI Screen
+<!-- ## Assignment 1 – UI Screen
 
 This project includes:
 
@@ -19,6 +17,30 @@ Home || Detail || ViewAll Screen UI
 Home Filter || Add Favourit 
 
 Styled Components || Responsive Layout || Navigation Setup || Clean UI Design
+---
+![Demo](./assets/t1.gif)
+ -->
+
+
+## Assignment 2 – UI Screen
+
+This project includes:
+
+Bottom Naviagtion 
+
+Home || Login || Profile
+
+Dynamic  news catgoery ('Business', 'Sports', 'Technology', 'Health')
+
+Dynamic  News API Integration (Latest US & India Dynamic)
+
+Navigation to News Detail screen with 
+
+Styled Components || Responsive Layout || Navigation Setup || Clean UI Design
+
+![Demo](./assets/t2a.gif)
+
+![Demo](./assets/t2b.gif)
 
 ## Tech Stack
 
