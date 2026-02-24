@@ -28,7 +28,7 @@ const HomeScreen = () => {
   const [usNews, setUsNews] = useState<Place[]>([]);
   const [indiaNews, setIndiaNews] = useState<Place[]>([]);
 
-  // ✅ Memoized API call
+  //  Memoized API call
   const fetchNews = useCallback(async () => {
     try {
       setLoading(true);
@@ -55,7 +55,7 @@ const HomeScreen = () => {
     fetchNews();
   }, [fetchNews]);
 
-  // ✅ Search filter for both lists
+  //  Search filter for both lists
   const filteredUSNews = useMemo(() => {
     return usNews.filter(item =>
       item.title?.toLowerCase().includes(search.toLowerCase()),
@@ -93,7 +93,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={[]}   // ✅ No fake data needed
+        data={[]}   // No fake data needed
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 20 }}
