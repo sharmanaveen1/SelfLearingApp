@@ -1,5 +1,5 @@
 // types/place.ts
-export interface Place {
+export interface NewsData {
    article_id: string;
   link: string;
   title: string;

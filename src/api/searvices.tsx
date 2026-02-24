@@ -3,10 +3,7 @@ import { apiClient } from '../api/apiClient';
 
 const API_KEY = 'pub_fe8069f0cdc7470b953d3c713150e181';
 
-export const getNews = async (
-  country: string,
-  category: string,
-) => {
+export const getNews = async (country: string, category: string) => {
   try {
     const response = await apiClient.get('/latest', {
       params: {
@@ -18,13 +15,18 @@ export const getNews = async (
       },
     });
 
+      // 🔥 IMPORTANT: Handle API error manually
+    if (response.data.status === 'error') {
+      throw new Error(response.data?.results?.message || 'API Error');
+    }
+
+
     // Handle API-level errors (if backend sends status flag)
     if (!response.data || response.data.status !== 'success') {
       throw new Error(response.data?.message || 'Failed to fetch news');
     }
-
+  
     return response.data;
-
   } catch (error: any) {
     // Axios error handling
     if (axios.isAxiosError(error)) {

@@ -12,18 +12,17 @@ import TravelDetailsScreen from './src/detail/TravelDetailsScreen';
 import ExampleScreen from './src/ExampleScreen';
 import { StatusBar } from 'react-native';
 import ViewAllScreen from './src/home/ViewAllScreen';
-import { Place } from './src/home/place';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import ProfileScreen from './src/profile/ProfileScreen';
-import home from './src/home/home';
+import { NewsData } from './src/home/place';
 
 export type RootStackParamList = {
   Home: undefined;
-  Details: { place: Place };
-  ViewAll: { places: Place[] };
+  Details: { place: NewsData };
+  ViewAll: { news: NewsData[]; title: string };
 };
 
 const tabScreenOptions = ({ route }: any) => ({

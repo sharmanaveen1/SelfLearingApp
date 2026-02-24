@@ -14,9 +14,10 @@ import {
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Toast from 'react-native-toast-message';
 
-import { Place } from './place';
-import PlaceCard from './NewsCard';
+import { NewsData } from './place';
 import { getNews } from '../api/searvices';
+import { useNavigation } from '@react-navigation/native';
+import NewsCard from './NewsCard';
 
 const categories = ['business', 'sports', 'technology', 'health'];
 
@@ -25,8 +26,9 @@ const HomeScreen = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const [usNews, setUsNews] = useState<Place[]>([]);
-  const [indiaNews, setIndiaNews] = useState<Place[]>([]);
+  const [usNews, setUsNews] = useState<NewsData[]>([]);
+  const [indiaNews, setIndiaNews] = useState<NewsData[]>([]);
+  const navigation = useNavigation();
 
   //  Memoized API call
   const fetchNews = useCallback(async () => {
@@ -86,14 +88,14 @@ const HomeScreen = () => {
     [selectedCategory],
   );
 
-  const renderPlace: ListRenderItem<Place> = ({ item }) => (
-    <PlaceCard place={item} />
+  const renderNews: ListRenderItem<NewsData> = ({ item }) => (
+    <NewsCard place={item} />
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={[]}   // No fake data needed
+        data={[]} // No fake data needed
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 20 }}
@@ -102,7 +104,7 @@ const HomeScreen = () => {
             {/* HEADER */}
             <View style={styles.header}>
               <View>
-                <Text style={styles.greeting}>Hi, David 👋</Text>
+                <Text style={styles.greeting}>Hi, David  👋</Text>
                 <Text style={styles.subText}>Explore the world</Text>
               </View>
               <Image
@@ -139,7 +141,16 @@ const HomeScreen = () => {
             {/* US NEWS */}
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>US NEWS</Text>
-              <Text style={styles.viewAll}>View All</Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ViewAll', {
+                    news: usNews,
+                    title: 'US NEWS',
+                  })
+                }
+              >
+                <Text style={styles.viewAll}>View All</Text>
+              </TouchableOpacity>
             </View>
 
             {loading ? (
@@ -148,8 +159,10 @@ const HomeScreen = () => {
               <FlatList
                 data={filteredUSNews}
                 horizontal
-                keyExtractor={item => item.article_id ?? Math.random().toString()}
-                renderItem={renderPlace}
+                keyExtractor={item =>
+                  item.article_id ?? Math.random().toString()
+                }
+                renderItem={renderNews}
                 showsHorizontalScrollIndicator={false}
                 ListEmptyComponent={<Text>No news found</Text>}
               />
@@ -158,14 +171,23 @@ const HomeScreen = () => {
             {/* INDIA NEWS */}
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>INDIA NEWS</Text>
-              <Text style={styles.viewAll}>View All</Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ViewAll', {
+                    news: indiaNews,
+                    title: 'INDIA NEWS',
+                  })
+                }
+              >
+                <Text style={styles.viewAll}>View All</Text>
+              </TouchableOpacity>
             </View>
 
             <FlatList
               data={filteredIndiaNews}
               horizontal
               keyExtractor={item => item.article_id ?? Math.random().toString()}
-              renderItem={renderPlace}
+              renderItem={renderNews}
               showsHorizontalScrollIndicator={false}
               ListEmptyComponent={<Text>No news found</Text>}
             />
@@ -211,7 +233,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
   },
-  sectionTitle: { fontSize: 18, fontWeight: '600' },
+  sectionTitle: { fontSize: 18, fontWeight: '600', marginVertical: 20 },
   countrieTitle: { fontSize: 18, fontWeight: '600', marginVertical: 30 },
 
   viewAll: { color: '#4A80F0', fontWeight: '500' },

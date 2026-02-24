@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import { Place } from './place';
 import { useNavigation } from '@react-navigation/native';
+import { NewsData } from './place';
 
 interface Props {
-  place: Place;
+  place: NewsData;
 }
 
 const NewsCard = ({ place }: Props) => {
