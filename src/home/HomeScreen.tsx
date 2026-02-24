@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import {
   View,
   Text,
@@ -13,27 +12,24 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import Toast from 'react-native-toast-message';
 
 import { Place } from './place';
 import PlaceCard from './NewsCard';
 import { getNews } from '../api/searvices';
-import Toast from 'react-native-toast-message';
 
 const categories = ['business', 'sports', 'technology', 'health'];
-const countries = ['in', 'us'];
-
-//API DOC https://newsdata.io/documentation#react
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState('business');
-  const [selectedCountry, setSelectedCountry] = useState('in');
   const [search, setSearch] = useState('');
-
   const [loading, setLoading] = useState(false);
-  const [news, setNews] = useState<Place[]>([]);
+
+  const [usNews, setUsNews] = useState<Place[]>([]);
   const [indiaNews, setIndiaNews] = useState<Place[]>([]);
 
-  const fetchNews = async () => {
+  // ✅ Memoized API call
+  const fetchNews = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -42,32 +38,37 @@ const HomeScreen = () => {
         getNews('in', selectedCategory),
       ]);
 
-      setNews(usData.results || []);
-      setIndiaNews(indiaData.results || []);
+      setUsNews(usData?.results ?? []);
+      setIndiaNews(indiaData?.results ?? []);
     } catch (error: any) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: error.message,
+        text2: error?.message ?? 'Something went wrong',
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory]);
 
   useEffect(() => {
     fetchNews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, selectedCountry]);
+  }, [fetchNews]);
 
-  // 🔥 Search filter
-  const filteredNews = useMemo(() => {
-    return news.filter(item =>
+  // ✅ Search filter for both lists
+  const filteredUSNews = useMemo(() => {
+    return usNews.filter(item =>
       item.title?.toLowerCase().includes(search.toLowerCase()),
     );
-  }, [news, search]);
+  }, [usNews, search]);
 
-  const renderCategory = React.useCallback(
+  const filteredIndiaNews = useMemo(() => {
+    return indiaNews.filter(item =>
+      item.title?.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [indiaNews, search]);
+
+  const renderCategory = useCallback(
     ({ item }: { item: string }) => {
       const isActive = item === selectedCategory;
 
@@ -92,8 +93,8 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={[{ key: 'main' }]}
-        keyExtractor={item => item.key}
+        data={[]}   // ✅ No fake data needed
+        keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 20 }}
         ListHeaderComponent={
@@ -116,7 +117,7 @@ const HomeScreen = () => {
             <View style={styles.searchBox}>
               <Ionicons name="search" size={20} color="#999" />
               <TextInput
-                placeholder="Search places"
+                placeholder="Search news"
                 placeholderTextColor="#999"
                 value={search}
                 onChangeText={setSearch}
@@ -132,40 +133,41 @@ const HomeScreen = () => {
               keyExtractor={item => item}
               renderItem={renderCategory}
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingVertical: 10, marginTop: 20 }}
+              contentContainerStyle={{ paddingVertical: 15 }}
             />
 
             {/* US NEWS */}
             <View style={styles.sectionHeader}>
-              <Text style={styles.countrieTitle}>US NEWS</Text>
-              <Text style={styles.subText}>View All</Text>
+              <Text style={styles.sectionTitle}>US NEWS</Text>
+              <Text style={styles.viewAll}>View All</Text>
             </View>
 
             {loading ? (
               <ActivityIndicator size="small" />
             ) : (
               <FlatList
-                data={filteredNews}
+                data={filteredUSNews}
                 horizontal
-                keyExtractor={item => item.article_id}
+                keyExtractor={item => item.article_id ?? Math.random().toString()}
                 renderItem={renderPlace}
                 showsHorizontalScrollIndicator={false}
+                ListEmptyComponent={<Text>No news found</Text>}
               />
             )}
 
             {/* INDIA NEWS */}
             <View style={styles.sectionHeader}>
-               <Text style={styles.countrieTitle}>INDIA NEWS</Text>
-              <Text style={styles.subText}>View All</Text>
+              <Text style={styles.sectionTitle}>INDIA NEWS</Text>
+              <Text style={styles.viewAll}>View All</Text>
             </View>
-          
 
             <FlatList
-              data={indiaNews}
+              data={filteredIndiaNews}
               horizontal
-              keyExtractor={item => item.article_id}
+              keyExtractor={item => item.article_id ?? Math.random().toString()}
               renderItem={renderPlace}
               showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={<Text>No news found</Text>}
             />
           </>
         }
