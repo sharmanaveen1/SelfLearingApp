@@ -17,7 +17,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import ProfileScreen from './src/profile/ProfileScreen';
-import { NewsData } from './src/home/place';
+import { NewsData } from './src/home/NewsData';
+import { Colors } from './src/theme';
+
 
 export type RootStackParamList = {
   Home: undefined;
@@ -83,8 +85,7 @@ function RootStack() {
 
 const App = () => {
   return (
-    // eslint-disable-next-line react-native/no-inline-styles
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#0D47A1' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryDark }}>
       <StatusBar barStyle="light-content" />
       <NavigationContainer>
         <RootStack />

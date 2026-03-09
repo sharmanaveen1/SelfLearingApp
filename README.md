@@ -38,9 +38,7 @@ Navigation to News Detail screen with
 
 Styled Components || Responsive Layout || Navigation Setup || Clean UI Design
 
-![Demo](./assets/t2a.gif) 
-
-![Demo](./assets/t2b.gif)
+![Demo](./assets/t2a.gif) ![Demo](./assets/t2b.gif)
 
 ## Tech Stack
 

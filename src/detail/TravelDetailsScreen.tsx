@@ -13,7 +13,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import { RootStackParamList } from '../../App';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { NewsData } from '../home/place';
+import { NewsData } from '../home/NewsData';
 
 type RouteProps = RouteProp<RootStackParamList, 'Details'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Details'>;

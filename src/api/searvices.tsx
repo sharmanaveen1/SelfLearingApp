@@ -16,14 +16,14 @@ export const getNews = async (country: string, category: string) => {
     });
 
       // 🔥 IMPORTANT: Handle API error manually
-    if (response.data.status === 'error') {
-      throw new Error(response.data?.results?.message || 'API Error');
-    }
+    
 
 
     // Handle API-level errors (if backend sends status flag)
     if (!response.data || response.data.status !== 'success') {
       throw new Error(response.data?.message || 'Failed to fetch news');
+    }else if (response.data.status === 'error') {
+      throw new Error(response.data?.results?.message || 'API Error');
     }
   
     return response.data;

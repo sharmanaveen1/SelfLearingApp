@@ -13,7 +13,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../../App';
-import { NewsData } from './place';
+import { NewsData } from './NewsData';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 type ViewAllRouteProp = RouteProp<RootStackParamList, 'ViewAll'>;

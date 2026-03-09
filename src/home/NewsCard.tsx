@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
-import { NewsData } from './place';
+import { NewsData } from './NewsData';
 
 interface Props {
   place: NewsData;
@@ -37,14 +37,18 @@ const NewsCard = ({ place }: Props) => {
         <Text style={styles.placeTitle}>{place.title}</Text>
 
         <View style={styles.row}>
-          <Ionicons name="calendar-outline" size={14} color="#fff" />
-          <Text style={styles.placeCountry}>{place.pubDate}</Text>
+          <Image 
+            source={{ uri: place.source_icon }} 
+            style={styles.sourceIcon}
+          />
+          <Text style={styles.placeCountry}>{place.source_name}</Text>
         </View>
 
         {/* <View style={styles.row}>
           <Ionicons name="star" size={14} color="#FFD700" />
           <Text style={styles.rating}>{place.}</Text>
         </View> */}
+
       </View>
     </View>
   );
@@ -77,6 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.35)',
   },
   placeTitle: { color: '#fff', fontSize: 14, fontWeight: '700' },
+  sourceIcon: { width: 16, height: 16, borderRadius: 8, marginRight: 6 },
   placeCountry: { color: '#ddd', fontSize: 12, marginLeft: 4 },
   rating: { color: '#fff', marginLeft: 4, fontSize: 12 },
   row: { flexDirection: 'row', alignItems: 'center', marginTop: 4 },

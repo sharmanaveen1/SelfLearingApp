@@ -14,15 +14,21 @@ import {
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Toast from 'react-native-toast-message';
 
-import { NewsData } from './place';
+import { NewsData } from './NewsData';
 import { getNews } from '../api/searvices';
 import { useNavigation } from '@react-navigation/native';
 import NewsCard from './NewsCard';
+import { Colors, Strings, typography } from '../theme';
 
-const categories = ['business', 'sports', 'technology', 'health'];
+const categories = [
+  Strings.category.business,
+  Strings.category.sports,
+  Strings.category.technology,
+  Strings.category.health,
+];
 
 const HomeScreen = () => {
-  const [selectedCategory, setSelectedCategory] = useState('business');
+  const [selectedCategory, setSelectedCategory] = useState(Strings.category.business.toLowerCase());
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -45,8 +51,8 @@ const HomeScreen = () => {
     } catch (error: any) {
       Toast.show({
         type: 'error',
-        text1: 'Error',
-        text2: error?.message ?? 'Something went wrong',
+        text1: Strings.common.error,
+        text2: error?.message ?? Strings.errors.somethingWentWrong,
       });
     } finally {
       setLoading(false);
@@ -72,11 +78,11 @@ const HomeScreen = () => {
 
   const renderCategory = useCallback(
     ({ item }: { item: string }) => {
-      const isActive = item === selectedCategory;
+      const isActive = item.toLowerCase() === selectedCategory;
 
       return (
         <TouchableOpacity
-          onPress={() => setSelectedCategory(item)}
+          onPress={() => setSelectedCategory(item.toLowerCase())}
           style={[styles.categoryBtn, isActive && styles.activeCategory]}
         >
           <Text style={[styles.categoryText, isActive && styles.activeText]}>
@@ -95,7 +101,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={[]} // No fake data needed
+        data={[]}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 20 }}
@@ -104,8 +110,8 @@ const HomeScreen = () => {
             {/* HEADER */}
             <View style={styles.header}>
               <View>
-                <Text style={styles.greeting}>Hi, David  👋</Text>
-                <Text style={styles.subText}>Explore the world</Text>
+                <Text style={styles.greeting}>{Strings.home.greeting}</Text>
+                <Text style={styles.subText}>{Strings.home.exploreWorld}</Text>
               </View>
               <Image
                 source={{
@@ -117,15 +123,15 @@ const HomeScreen = () => {
 
             {/* SEARCH */}
             <View style={styles.searchBox}>
-              <Ionicons name="search" size={20} color="#999" />
+              <Ionicons name="search" size={20} color={Colors.textHint} />
               <TextInput
-                placeholder="Search news"
-                placeholderTextColor="#999"
+                placeholder={Strings.home.searchNews}
+                placeholderTextColor={Colors.textHint}
                 value={search}
                 onChangeText={setSearch}
                 style={styles.searchInput}
               />
-              <Ionicons name="options-outline" size={20} color="#999" />
+              <Ionicons name="options-outline" size={20} color={Colors.textHint} />
             </View>
 
             {/* CATEGORY LIST */}
@@ -140,21 +146,21 @@ const HomeScreen = () => {
 
             {/* US NEWS */}
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>US NEWS</Text>
+              <Text style={styles.sectionTitle}>{Strings.home.usNews}</Text>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('ViewAll', {
                     news: usNews,
-                    title: 'US NEWS',
+                    title: Strings.home.usNews,
                   })
                 }
               >
-                <Text style={styles.viewAll}>View All</Text>
+                <Text style={styles.viewAll}>{Strings.home.viewAll}</Text>
               </TouchableOpacity>
             </View>
 
             {loading ? (
-              <ActivityIndicator size="small" />
+              <ActivityIndicator size="small" color={Colors.primary} />
             ) : (
               <FlatList
                 data={filteredUSNews}
@@ -164,22 +170,22 @@ const HomeScreen = () => {
                 }
                 renderItem={renderNews}
                 showsHorizontalScrollIndicator={false}
-                ListEmptyComponent={<Text>No news found</Text>}
+                ListEmptyComponent={<Text>{Strings.home.searchNews}</Text>}
               />
             )}
 
             {/* INDIA NEWS */}
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>INDIA NEWS</Text>
+              <Text style={styles.sectionTitle}>{Strings.home.indiaNews}</Text>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('ViewAll', {
                     news: indiaNews,
-                    title: 'INDIA NEWS',
+                    title: Strings.home.indiaNews,
                   })
                 }
               >
-                <Text style={styles.viewAll}>View All</Text>
+                <Text style={styles.viewAll}>{Strings.home.viewAll}</Text>
               </TouchableOpacity>
             </View>
 
@@ -189,7 +195,7 @@ const HomeScreen = () => {
               keyExtractor={item => item.article_id ?? Math.random().toString()}
               renderItem={renderNews}
               showsHorizontalScrollIndicator={false}
-              ListEmptyComponent={<Text>No news found</Text>}
+              ListEmptyComponent={<Text>{Strings.common.noNewsFound}</Text>}
             />
           </>
         }
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F8F9FB',
+    backgroundColor: Colors.background,
     paddingHorizontal: 5,
   },
   header: {
@@ -212,20 +218,33 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginTop: 10,
   },
-  greeting: { fontSize: 22, fontWeight: '700' },
-  subText: { color: '#777', marginTop: 4 },
+  greeting: {
+    fontSize: typography.fontSize.xxl,
+    fontWeight: typography.fontWeight.bold,
+    color: Colors.textPrimary,
+  },
+  subText: {
+    color: Colors.textTertiary,
+    marginTop: 4,
+    fontSize: typography.fontSize.base,
+  },
   avatar: { width: 45, height: 45, borderRadius: 25 },
 
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderRadius: 12,
     paddingHorizontal: 15,
     marginTop: 20,
     elevation: 2,
   },
-  searchInput: { flex: 1, paddingVertical: 10, marginHorizontal: 8 },
+  searchInput: {
+    flex: 1,
+    paddingVertical: 10,
+    marginHorizontal: 8,
+    color: Colors.textPrimary,
+  },
 
   sectionHeader: {
     flexDirection: 'row',
@@ -233,15 +252,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
   },
-  sectionTitle: { fontSize: 18, fontWeight: '600', marginVertical: 20 },
-  countrieTitle: { fontSize: 18, fontWeight: '600', marginVertical: 30 },
+  sectionTitle: {
+    fontSize: typography.fontSize.lg,
+    fontWeight: typography.fontWeight.semibold,
+    marginVertical: 20,
+    color: Colors.textPrimary,
+  },
 
-  viewAll: { color: '#4A80F0', fontWeight: '500' },
+  viewAll: {
+    color: Colors.link,
+    fontWeight: typography.fontWeight.medium,
+  },
 
   categoryBtn: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#eee',
+    backgroundColor: Colors.border,
     borderRadius: 20,
     marginRight: 10,
     alignSelf: 'flex-start',
@@ -249,10 +275,16 @@ const styles = StyleSheet.create({
 
   activeCategory: {
     alignSelf: 'flex-start',
-    backgroundColor: '#5b76fb',
+    backgroundColor: Colors.primary,
   },
-  categoryText: { color: '#555' },
-  activeText: { color: '#fff' },
+  categoryText: {
+    color: Colors.textSecondary,
+    fontSize: typography.fontSize.sm,
+    fontWeight: typography.fontWeight.semibold,
+  },
+  activeText: {
+    color: Colors.white,
+  },
 });
 
 export default HomeScreen;
