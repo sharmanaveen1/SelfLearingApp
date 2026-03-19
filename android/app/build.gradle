@@ -84,6 +84,26 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "APP_ENV", '"dev"'
+    }
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            buildConfigField "String", "APP_ENV", '"dev"'
+        }
+        staging {
+            dimension "environment"
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            buildConfigField "String", "APP_ENV", '"staging"'
+        }
+        prod {
+            dimension "environment"
+            buildConfigField "String", "APP_ENV", '"prod"'
+        }
     }
     signingConfigs {
         debug {

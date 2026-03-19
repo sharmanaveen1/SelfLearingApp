@@ -54,6 +54,11 @@ Camera and gallery File picker
 
 Generate signed APK/AAB
 
+# Environment-based builds
+npm run android:dev
+npm run android:staging
+npm run android:prod
+
 ![Demo](./assets/t41.gif) ![Demo](./assets/t42.gif)
 
 ## Tech Stack
@@ -94,6 +99,11 @@ yarn start
 ```sh
 # Using npm
 npm run android
+
+# Environment-based builds
+npm run android:dev
+npm run android:staging
+npm run android:prod
 
 # OR using Yarn
 yarn android
