@@ -22,7 +22,7 @@ Styled Components || Responsive Layout || Navigation Setup || Clean UI Design
  -->
 
 
-## Assignment 2 – UI Screen
+## Assignment 2 -3 – UI Screen
 
 This project includes:
 
@@ -39,6 +39,22 @@ Navigation to News Detail screen with
 Styled Components || Responsive Layout || Navigation Setup || Clean UI Design
 
 ![Demo](./assets/t2a.gif) ![Demo](./assets/t2b.gif)
+
+
+March 2026
+## Assignment 4 – UI Screen
+
+Integrate Android native modules
+
+EXO Player 
+
+RunTime Permissions 
+
+Camera and gallery File picker
+
+Generate signed APK/AAB
+
+![Demo](./assets/t41.gif) ![Demo](./assets/t42.gif)
 
 ## Tech Stack
 
