@@ -17,8 +17,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import ProfileScreen from './src/profile/ProfileScreen';
+import MoreScreen from './src/more/MoreScreen';
 import { NewsData } from './src/home/NewsData';
-import { Colors } from './src/theme';
+import { Colors } from './src/theme/Colors';
 
 
 export type RootStackParamList = {
@@ -41,6 +42,9 @@ const tabScreenOptions = ({ route }: any) => ({
         break;
       case 'Favourite':
         iconName = focused ? 'heart' : 'heart-outline';
+        break;
+      case 'More':
+        iconName = focused ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline';
         break;
       default:
         iconName = 'ellipse';
@@ -68,6 +72,7 @@ function MainTabs() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Favourite" component={LoginScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="More" component={MoreScreen} />
     </Tab.Navigator>
   );
 }

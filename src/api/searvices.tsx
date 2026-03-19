@@ -15,9 +15,6 @@ export const getNews = async (country: string, category: string) => {
       },
     });
 
-      // 🔥 IMPORTANT: Handle API error manually
-    
-
 
     // Handle API-level errors (if backend sends status flag)
     if (!response.data || response.data.status !== 'success') {

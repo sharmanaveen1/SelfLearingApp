@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,8 +6,12 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 // Standard TypeScript Props Interface
 interface MenuRowProps {
@@ -51,8 +55,83 @@ const HELP_SUPPORT = [
 ];
 
 function ProfileScreen() {
+  const [avatarUri, setAvatarUri] = useState(PROFILE_DATA.avatar);
+
   const handleMenuPress = (label: string) => {
     console.log(label);
+  };
+
+  const requestCameraPermission = async () => {
+    if (Platform.OS !== 'android') return true;
+
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Camera Permission',
+        message: 'We need access to your camera to take a profile picture',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  };
+
+  const requestGalleryPermission = async () => {
+    if (Platform.OS !== 'android') return true;
+
+    const permission =
+      Platform.Version >= 33
+        ? PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
+        : PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
+
+    const granted = await PermissionsAndroid.request(permission, {
+      title: 'Storage Permission',
+      message: 'We need access to your photos to choose a profile picture',
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'Cancel',
+      buttonPositive: 'OK',
+    });
+
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  };
+
+  const onSelectPhoto = async () => {
+    Alert.alert('Update profile photo', 'Choose source', [
+      {
+        text: 'Camera',
+        onPress: async () => {
+          const hasPermission = await requestCameraPermission();
+          if (!hasPermission) return;
+
+          const result = await launchCamera({
+            mediaType: 'photo',
+            cameraType: 'back',
+            saveToPhotos: true,
+          });
+
+          if (result.assets?.[0]?.uri) {
+            setAvatarUri(result.assets[0].uri);
+          }
+        },
+      },
+      {
+        text: 'Gallery',
+        onPress: async () => {
+          const hasPermission = await requestGalleryPermission();
+          if (!hasPermission) return;
+
+          const result = await launchImageLibrary({
+            mediaType: 'photo',
+          });
+
+          if (result.assets?.[0]?.uri) {
+            setAvatarUri(result.assets[0].uri);
+          }
+        },
+      },
+      { text: 'Cancel', style: 'cancel' },
+    ]);
   };
 
   return (
@@ -66,11 +145,8 @@ function ProfileScreen() {
           <Text style={styles.headerTitle}>Profile</Text>
 
           <View style={styles.avatarWrapper}>
-            <Image
-              source={{ uri: PROFILE_DATA.avatar }}
-              style={styles.avatar}
-            />
-            <TouchableOpacity style={styles.editIconContainer}>
+            <Image source={{ uri: avatarUri }} style={styles.avatar} />
+            <TouchableOpacity style={styles.editIconContainer} onPress={onSelectPhoto}>
               <Text style={styles.editIcon}>✎</Text>
             </TouchableOpacity>
           </View>

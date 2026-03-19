@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
+  NativeModules,
   View,
   Text,
   StyleSheet,
@@ -35,6 +36,12 @@ const HomeScreen = () => {
   const [usNews, setUsNews] = useState<NewsData[]>([]);
   const [indiaNews, setIndiaNews] = useState<NewsData[]>([]);
   const navigation = useNavigation();
+
+  const { MyNativeModel } = NativeModules;
+
+  const openVideoPlayer = useCallback(() => {
+    MyNativeModel?.openVideoPlayer?.();
+  }, []);
 
   //  Memoized API call
   const fetchNews = useCallback(async () => {
@@ -113,12 +120,18 @@ const HomeScreen = () => {
                 <Text style={styles.greeting}>{Strings.home.greeting}</Text>
                 <Text style={styles.subText}>{Strings.home.exploreWorld}</Text>
               </View>
-              <Image
-                source={{
-                  uri: 'https://randomuser.me/api/portraits/men/32.jpg',
-                }}
-                style={styles.avatar}
-              />
+
+              <View style={styles.headerRight}>
+                <TouchableOpacity style={styles.videoButton} onPress={openVideoPlayer}>
+                  <Text style={styles.videoButtonText}>Play Video</Text>
+                </TouchableOpacity>
+                <Image
+                  source={{
+                    uri: 'https://randomuser.me/api/portraits/men/32.jpg',
+                  }}
+                  style={styles.avatar}
+                />
+              </View>
             </View>
 
             {/* SEARCH */}
@@ -284,6 +297,24 @@ const styles = StyleSheet.create({
   },
   activeText: {
     color: Colors.white,
+  },
+
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  videoButton: {
+    backgroundColor: Colors.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
+  videoButtonText: {
+    color: Colors.white,
+    fontWeight: typography.fontWeight.semibold,
   },
 });
 
